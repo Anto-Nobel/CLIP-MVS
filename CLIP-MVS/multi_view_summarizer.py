@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 from concurrent.futures import ThreadPoolExecutor
 from .video_loader import VideoDataLoader
 from .clip_retriever import CLIPEmbeddingRetriever
@@ -76,13 +77,15 @@ class MultiViewSummarizer:
         
         return summary
 
-    def visualize_summary(self, summary):
+    def visualize_summary(self, summary, video_path):
         """
         Visualize the summary generated.
 
         Args:
             summary (list): The summary data containing timestamps and frames.
+            video_path (str): Path to the video file for visualization.
         """
+        # Visualize frames
         plt.figure(figsize=(15, 5))
         for i, item in enumerate(summary):
             frame = item["frame"]
@@ -92,6 +95,20 @@ class MultiViewSummarizer:
                 plt.imshow(frame)
                 plt.title(f"Timestamp: {timestamp:.2f}s\nScore: {item['similarity']:.4f}")
                 plt.axis('off')
+        plt.show()
+
+        # Visualize timeline
+        timestamps = [item["timestamp"] for item in summary]
+        scores = [item["similarity"] for item in summary]
+
+        plt.figure(figsize=(10, 2))
+        plt.hlines(1, 0, max(timestamps), colors='gray', linestyles='dashed')
+        plt.eventplot(timestamps, orientation='horizontal', colors='blue')
+        for ts, score in zip(timestamps, scores):
+            plt.text(ts, 1.05, f"{ts:.2f}s\n{score:.4f}", ha='center', va='bottom', fontsize=8)
+        plt.title('Queried Vectors on Timeline')
+        plt.xlabel('Timestamp (s)')
+        plt.yticks([])
         plt.show()
 
     def close(self):
