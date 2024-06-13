@@ -12,8 +12,8 @@ query_text = "A person playing guitar"
 video_path = video_paths[0]  # Path to the video for visualization
 summary = summarizer.generate_summary(query_text, video_path)
 
-# Visualize the summary
-summarizer.visualize_summary(summary)
+# Visualize the summary and timeline
+summarizer.visualize_summary(summary, video_path)
 
 # Close the Qdrant connection
 summarizer.close()
