@@ -4,8 +4,7 @@ setup(
     name="clip_video_processor",
     version="0.1.0",
     description="A library for processing video frames and storing CLIP embeddings in Qdrant",
-    author="Anto Nobel",
-    author_email="your.email@example.com",
+    author="Vijay Anand Kandaswamy, Anto Nobel",
     url="https://github.com/yourusername/clip_video_processor",
     packages=find_packages(),
     install_requires=[
